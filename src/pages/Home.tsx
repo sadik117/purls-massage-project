@@ -209,6 +209,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       <section
+        id="contact-section"
         className="px-6 py-8"
       >
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
@@ -271,14 +272,16 @@ export default function Home({ onNavigate }: HomeProps) {
             <ul className="space-y-1.5">
               {['Home', 'Massage', 'Seated Massage', 'Personal Training', 'Beauty Packages', 'Qualifications', 'References'].map((label, i) => (
                 <li key={label}>
-                  <button
+                  <motion.button
                     id={`footer-link-${i}`}
                     onClick={() => navigateTo(i)}
-                    className="text-sm font-light transition-colors duration-200 hover:text-sky-400 text-left"
-                    style={{ color: '#ffffff', letterSpacing: '0.03em' }}
+                    className="text-sm font-light text-left cursor-pointer"
+                    style={{ color: '#ffffff', letterSpacing: '0.03em', originX: 0 }}
+                    whileHover={{ x: 6, color: '#38bdf8' }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                   >
                     {label}
-                  </button>
+                  </motion.button>
                 </li>
               ))}
             </ul>
