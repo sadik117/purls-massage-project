@@ -114,6 +114,7 @@ export default function Massage() {
                   src={s.img}
                   alt={s.title}
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading='lazy'
                 />
               </div>
 

@@ -1,16 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { PageConfig, FlipDirection } from '../../App'
-
-interface BookFlipProps {
-  pages: PageConfig[]
-  currentPage: number
-  nextPage: number | null
-  isFlipping: boolean
-  direction: FlipDirection
-  onFlipComplete: () => void
-  onNavigate: (index: number) => void
-  totalPages: number
-}
+import type { BookFlipProps } from '../../types'
 
 export default function BookFlip({
   pages,

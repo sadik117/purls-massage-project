@@ -9,12 +9,8 @@ import PersonalTraining from './pages/PersonalTraining'
 import BeautyPackages from './pages/BeautyPackages'
 import Qualifications from './pages/Qualifications'
 import References from './pages/References'
-
-export interface PageConfig {
-  id: string
-  label: string
-  component: React.ReactNode
-}
+import NotFound from './pages/NotFound'
+import type { FlipDirection, PageConfig } from './types'
 
 export const PAGES: PageConfig[] = [
   { id: 'home',             label: 'Home',               component: <Home /> },
@@ -26,23 +22,44 @@ export const PAGES: PageConfig[] = [
   { id: 'references',       label: 'References',          component: <References /> },
 ]
 
-export type FlipDirection = 'forward' | 'backward'
+function getInitialState(): { initialPage: number; is404: boolean } {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase()
+  if (!path || path === 'home') return { initialPage: 0, is404: false }
+  
+  const foundIndex = PAGES.findIndex(p => p.id === path)
+  if (foundIndex !== -1) return { initialPage: foundIndex, is404: false }
+  
+  return { initialPage: 0, is404: true }
+}
 
 function App() {
-  const [currentPage, setCurrentPage]     = useState(0)
+  const initialState = getInitialState()
+  const [currentPage, setCurrentPage]     = useState(initialState.initialPage)
+  const [is404, setIs404]                 = useState(initialState.is404)
   const [nextPage, setNextPage]           = useState<number | null>(null)
   const [isFlipping, setIsFlipping]       = useState(false)
   const [direction, setDirection]         = useState<FlipDirection>('forward')
   const [navOpen, setNavOpen]             = useState(false)
 
   const navigateTo = useCallback((targetIndex: number) => {
+    if (is404) {
+      setIs404(false)
+      setCurrentPage(targetIndex)
+      const pageId = PAGES[targetIndex].id
+      window.history.pushState({}, '', pageId === 'home' ? '/' : `/${pageId}`)
+      return
+    }
+
     if (isFlipping || targetIndex === currentPage) return
     const dir: FlipDirection = targetIndex > currentPage ? 'forward' : 'backward'
     setDirection(dir)
     setNextPage(targetIndex)
     setIsFlipping(true)
     setNavOpen(false)
-  }, [isFlipping, currentPage])
+
+    const pageId = PAGES[targetIndex].id
+    window.history.pushState({}, '', pageId === 'home' ? '/' : `/${pageId}`)
+  }, [isFlipping, currentPage, is404])
 
   const handleFlipComplete = useCallback(() => {
     if (nextPage !== null) {
@@ -53,6 +70,17 @@ function App() {
   }, [nextPage])
 
   useEffect(() => {
+    const handlePopState = () => {
+      const state = getInitialState()
+      setIs404(state.is404)
+      setCurrentPage(state.initialPage)
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  useEffect(() => {
+    if (is404) return
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' && currentPage < PAGES.length - 1) {
         navigateTo(currentPage + 1)
@@ -62,7 +90,7 @@ function App() {
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [currentPage, navigateTo])
+  }, [currentPage, navigateTo, is404])
 
   useEffect(() => {
     const handleNav = (e: Event) => {
@@ -72,6 +100,10 @@ function App() {
     window.addEventListener('purls-navigate', handleNav)
     return () => window.removeEventListener('purls-navigate', handleNav)
   }, [navigateTo])
+
+  if (is404) {
+    return <NotFound />
+  }
 
   return (
     <div className="relative w-full h-full overflow-hidden" style={{ background: 'var(--color-bg)' }}>
@@ -102,7 +134,6 @@ function App() {
       />
 
       <ScrollToTop />
-      
     </div>
   )
 }

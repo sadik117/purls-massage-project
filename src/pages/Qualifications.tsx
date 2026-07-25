@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import Copyright from '../components/shared/Copyright'
 
-/* ─────────────────────────── animation helpers ─────────────────────────── */
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 36 },
   whileInView: { opacity: 1, y: 0 },
@@ -9,7 +8,6 @@ const fadeUp = (delay = 0) => ({
   transition: { delay, duration: 0.65, ease: 'easeOut' },
 })
 
-/* ─────────────────────────── certificate data ─────────────────────────── */
 const massageCerts = [
   {
     src: 'https://purls-group.co.uk/wp-content/uploads/2025/10/11201ead-8c8e-44a6-9366-a06f3c156f2c.jpeg',

@@ -171,6 +171,7 @@ export default function BeautyPackages() {
             src={IMG}
             alt="Beauty pedicure treatment"
             className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
+            loading='lazy'
           />
           <div
             className="absolute inset-0 pointer-events-none"

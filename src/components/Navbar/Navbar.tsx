@@ -1,14 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { BookOpen, X } from 'lucide-react'
-import type { PageConfig } from '../../App'
+import type { NavbarProps } from '../../types'
 
-interface NavbarProps {
-  pages: PageConfig[]
-  currentPage: number
-  isOpen: boolean
-  onToggle: () => void
-  onNavigate: (index: number) => void
-}
 
 const sidebarVariants = {
   hidden: { x: '-100%', opacity: 0 },

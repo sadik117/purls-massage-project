@@ -1,13 +1,6 @@
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import type { ServiceCardProps } from '../../types'
 
-interface ServiceCardProps {
-  icon: ReactNode
-  title: string
-  description: string
-  delay?: number
-  id?: string
-}
 
 export default function ServiceCard({ icon, title, description, delay = 0, id }: ServiceCardProps) {
   return (
