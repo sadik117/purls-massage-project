@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import BookFlip from './components/BookFlip/BookFlip'
 import Navbar from './components/Navbar/Navbar'
+import ScrollToTop from './components/shared/ScrollToTop'
 import Home from './pages/Home'
 import Massage from './pages/Massage'
 import SeatedMassage from './pages/SeatedMassage'
@@ -99,6 +100,9 @@ function App() {
         onToggle={() => setNavOpen(o => !o)}
         onNavigate={navigateTo}
       />
+
+      <ScrollToTop />
+      
     </div>
   )
 }
