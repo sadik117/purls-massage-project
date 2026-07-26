@@ -39,7 +39,6 @@ function App() {
   const [nextPage, setNextPage]           = useState<number | null>(null)
   const [isFlipping, setIsFlipping]       = useState(false)
   const [direction, setDirection]         = useState<FlipDirection>('forward')
-  const [navOpen, setNavOpen]             = useState(false)
 
   const navigateTo = useCallback((targetIndex: number) => {
     if (is404) {
@@ -55,7 +54,6 @@ function App() {
     setDirection(dir)
     setNextPage(targetIndex)
     setIsFlipping(true)
-    setNavOpen(false)
 
     const pageId = PAGES[targetIndex].id
     window.history.pushState({}, '', pageId === 'home' ? '/' : `/${pageId}`)
@@ -128,8 +126,6 @@ function App() {
       <Navbar
         pages={PAGES}
         currentPage={currentPage}
-        isOpen={navOpen}
-        onToggle={() => setNavOpen(o => !o)}
         onNavigate={navigateTo}
       />
 

@@ -41,23 +41,22 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, scale: 0.7 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center justify-center rounded-full shadow-lg outline-none border-none select-none"
+          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 flex items-center justify-center rounded-full shadow-md outline-none border border-black/10 select-none"
           style={{
-            width: '35px',
-            height: '35px',
-            background: '#7dd3fc',
-            boxShadow: '0 4px 14px rgba(125, 211, 252, 0.3)',
+            width: '40px',
+            height: '40px',
+            background: '#d2c3a5',
             cursor: 'pointer',
           }}
           whileHover={{
             scale: 1.1,
-            background: '#38bdf8',
-            boxShadow: '0 6px 20px rgba(56, 189, 248, 0.5)',
+            background: '#e8dcc4',
+            boxShadow: '0 6px 16px rgba(0, 0, 0, 0.15)',
           }}
           whileTap={{ scale: 0.95 }}
           aria-label="Scroll to top"
         >
-          <ArrowUp size={18} className="text-white" strokeWidth={2.5} />
+          <ArrowUp size={20} className="text-[#2a2c31]" strokeWidth={2} />
         </motion.button>
       )}
     </AnimatePresence>

@@ -1,12 +1,12 @@
-
 import { motion } from 'framer-motion'
 import { Facebook, Instagram, HelpCircle, Phone, Mail, Clock, ChevronRight, MessageCircle } from 'lucide-react'
 import NeedHelp from '../components/shared/NeedHelp'
 import Copyright from '../components/shared/Copyright'
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
-  animate: { opacity: 1, y: 0 },
+  initial: { opacity: 0, y: 15 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-50px" },
   transition: { delay, duration: 0.6, ease: 'easeOut' },
 })
 
@@ -48,100 +48,63 @@ export default function Home({ onNavigate }: HomeProps) {
   }
 
   return (
-    <div
-      className="page-scroll w-full h-full"
-      style={{ background: '#000', fontFamily: 'var(--font-family-primary)' }}
-    >
-      <div
-        className="w-full flex items-center justify-between px-5 py-2 text-xs tracking-wide"
-        style={{ background: 'linear-gradient(90deg, #0369a1 0%, #0ea5e9 100%)', color: '#fff' }}
-      >
-        <a
-          href="https://wa.me/61434605902"
-          className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
-          style={{ letterSpacing: '0.06em', color: '#ffffff' }}
-        >
-          <MessageCircle size={12} />
-          WHATSAPP: +61434605902
+    <div className="page-scroll w-full h-full relative">
+      <div className="coffee-stain w-64 h-64 top-10 right-10 opacity-40"></div>
+      
+      <div className="w-full flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 font-typewriter text-[10px] sm:text-xs opacity-70 border-b border-black/10">
+        <a href="https://wa.me/61434605902" className="flex items-center gap-1 sm:gap-1.5 hover:opacity-80">
+          <MessageCircle size={14} />
+          <span className="hidden sm:inline">WHATSAPP: </span>+61434605902
         </a>
-        <div className="flex items-center gap-4">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <Facebook size={14} className="hover:opacity-70 transition-opacity" />
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <Instagram size={14} className="hover:opacity-70 transition-opacity" />
-          </a>
+        <div className="flex items-center gap-3 sm:gap-4">
+          <a href="https://facebook.com" aria-label="Facebook"><Facebook size={14} /></a>
+          <a href="https://instagram.com" aria-label="Instagram"><Instagram size={14} /></a>
           <a
             href="#contact-section"
             onClick={(e) => {
               e.preventDefault()
               document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="flex items-center gap-1 hover:opacity-80 transition-opacity"
-            style={{ letterSpacing: '0.08em', color: '#ffffff' }}
+            className="flex items-center gap-1 hover:opacity-80 font-bold"
           >
-            <HelpCircle size={12} />
-            NEED HELP
+            <HelpCircle size={14} />
+            <span className="hidden sm:inline">NEED HELP</span>
           </a>
         </div>
       </div>
 
-      <section
-        className="relative flex flex-col items-center justify-center overflow-hidden"
-        style={{ minHeight: '65vh', background: '#000' }}
-      >
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="select-none py-6 flex justify-center items-center"
-        >
+      <section className="relative flex flex-col items-center mt-4 md:-mt-4">
+        <motion.div {...fadeUp(0)} className="select-none -mb-6">
           <img
-            src="/Purls-Logo.png"
-            alt="Purls Massage Fitness Beauty"
-            className="w-auto h-48 md:h-64 object-contain filter drop-shadow-[0_0_25px_rgba(14,165,233,0.35)]"
+            src="/Purls_Logo_Full.png"
+            alt="Purls Logo"
+            className="w-auto h-48 md:h-72 object-contain mix-blend-multiply opacity-90 sepia-[0.3]"
           />
         </motion.div>
-
-        <motion.div {...fadeUp(0.5)} className="flex gap-3 justify-center mt-2">
+        
+        <motion.div {...fadeUp(0.2)}>
           <a
-            id="hero-cta-contact"
             href="#contact-section"
             onClick={(e) => {
               e.preventDefault()
               document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="animated-contact-btn-outer cursor-pointer"
+            className="inline-block px-6 py-2 border-2 border-[var(--color-ink)] font-typewriter font-bold uppercase tracking-widest text-sm hover:bg-[var(--color-ink)] hover:text-white transition-colors"
           >
-            <span className="animated-contact-btn-inner font-semibold">
-              Contact Us
-            </span>
+            Contact Us
           </a>
         </motion.div>
       </section>
 
-      <section
-        className="px-8 py-6 text-center max-w-3xl mx-auto"
-      >
-        <motion.p
-          {...fadeUp(0)}
-          className="font-light leading-relaxed mb-6"
-          style={{ color: '#ffffff', fontSize: '1rem', lineHeight: 1.9 }}
-        >
+      <section className="px-6 md:px-10 py-6 max-w-3xl mx-auto font-serif text-base md:text-lg leading-relaxed">
+        <motion.p {...fadeUp(0.1)} className="mb-6">
           I am a fully qualified and fully insured mobile Massage Therapist, Personal Trainer,
           and Beautician, offering bespoke services in the privacy and comfort of your own space —
           whether that's your home, office, hotel suite, aged care residence, hospital, or holiday
           property. I bring all professional equipment and premium products with me, creating a
-          seamless experience tailored to your needs. Each appointment is personalised to support
-          your well-being and lifestyle, offering a discreet, professional service tailored to clients
-          who value excellence, privacy, and convenience.
+          seamless experience tailored to your needs.
         </motion.p>
-        <motion.p
-          {...fadeUp(0.1)}
-          className="font-light leading-relaxed"
-          style={{ color: '#ffffff', fontSize: '1rem', lineHeight: 1.9 }}
-        >
+        <motion.p {...fadeUp(0.2)}>
           With over a decade of professional experience in Australia, I bring a unique blend
           of advanced skill, deep empathy, and global perspective to my work. After 10 transformative
           years abroad, I've returned home to launch a business rooted in excellence, integrity, and
@@ -149,85 +112,58 @@ export default function Home({ onNavigate }: HomeProps) {
         </motion.p>
       </section>
 
-      <section className="px-6 pb-16">
-        <motion.h2
+      <section className="px-4 md:px-8 pb-16 pt-12 relative">
+        <div className="coffee-stain w-96 h-96 -left-20 top-0 opacity-30"></div>
+        
+        <motion.h2 
           {...fadeUp(0)}
-          className="text-center py-8 font-semibold"
-          style={{ fontSize: '2.4rem', color: '#ffffff', letterSpacing: '0.02em' }}
+          className="text-center py-6 font-handwriting text-4xl md:text-5xl font-bold mb-6"
         >
-          Services
+          Our Services
         </motion.h2>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 md:gap-10 max-w-4xl mx-auto relative z-10">
           {services.map((s, i) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.55, ease: 'easeOut' }}
-              className="flex flex-col"
-              style={{
-                background: '#050d14',
-                border: '1px solid rgba(14,165,233,0.12)',
-              }}
+              {...fadeUp(i * 0.1)}
+              className="flex flex-col group cursor-pointer"
+              onClick={() => navigateTo(s.page)}
             >
-
-              <div className="overflow-hidden" style={{ height: '180px' }}>
+              <div className="sketched-border mb-4 overflow-hidden bg-white/50 h-56">
                 <img
                   src={s.img}
                   alt={s.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  className="w-full h-full object-cover mix-blend-multiply sepia-[0.4] contrast-125 transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
-
-              <div className="flex flex-col flex-1 p-4">
-                <h3
-                  className="mb-2 font-semibold"
-                  style={{ fontSize: '1.3rem', color: '#ffffff', letterSpacing: '0.01em' }}
-                >
-                  {s.title}
-                </h3>
-                <p
-                  className="flex-1 text-sm font-light leading-relaxed mb-4"
-                  style={{ color: '#ffffff', lineHeight: 1.75 }}
-                >
-                  {s.desc}
-                </p>
-                <button
-                  id={`service-readmore-${i}`}
-                  onClick={() => navigateTo(s.page)}
-                  className="animated-readmore-btn-outer cursor-pointer"
-                >
-                  <span className="animated-readmore-btn-inner">
-                    Read More <ChevronRight size={13} />
-                  </span>
-                </button>
+              <h3 className="font-handwriting text-3xl font-bold mb-2 text-[var(--color-accent)] group-hover:text-[var(--color-ink)] transition-colors">
+                {s.title}
+              </h3>
+              <p className="font-serif text-[1.05rem] leading-snug mb-3">
+                {s.desc}
+              </p>
+              <div className="font-typewriter text-xs font-bold uppercase tracking-widest flex items-center gap-1 opacity-70 group-hover:opacity-100">
+                Read More <ChevronRight size={14} />
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      <section
-        id="contact-section"
-        className="px-6 py-8"
-      >
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div>
+      <section id="contact-section" className="px-4 py-8 border-t border-black/10 mt-6 relative">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div className="bg-white/40 p-2 sketched-border">
+            <h3 className="font-handwriting text-4xl mb-2 text-center">Get in Touch</h3>
             <NeedHelp />
           </div>
-
-          <div className="h-full min-h-[250px] mt-2 md:mt-26">
+          <div className="h-full min-h-[300px] sketched-border overflow-hidden bg-white/40 p-2">
             <iframe
               title="Purls Group Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40407.2562476562!2d-0.8402283!3d50.7719602!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874457e5e3155ab%3A0xc0d87db14c81a53!2sManhood%20Peninsula!5e0!3m2!1sen!2suk!4v1690000000000!5m2!1sen!2suk"
               width="100%"
-              height="80%"
-              style={{
-                border: '1px solid rgba(14,165,233,0.2)',
-                minHeight: '250px',
-                filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)',
-              }}
+              height="100%"
+              style={{ minHeight: '300px', filter: 'sepia(0.8) contrast(1.1) opacity(0.8)' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -236,85 +172,43 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      <footer
-        className="px-6 py-8"
-        style={{ background: '#000', borderTop: '1px solid rgba(14,165,233,0.15)' }}
-      >
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+      <footer className="px-6 md:px-8 py-12 border-t border-black/20 mt-8 font-typewriter text-sm bg-[rgba(0,0,0,0.03)]">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3
-              className="mb-4 font-normal"
-              style={{ fontSize: '1.25rem', color: '#ffffff', letterSpacing: '0.04em' }}
-            >
-              Opening Hours
-            </h3>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-sm font-light" style={{ color: '#ffffff' }}>
-                <Clock size={13} />
-                Tuesday – Sunday
-              </div>
-              <p className="text-sm font-light" style={{ color: '#ffffff' }}>
-                12pm – 10pm
-              </p>
-              <p className="text-sm font-light" style={{ color: '#ffffff' }}>
-                Last appointment finishing at 10pm
-              </p>
+            <h3 className="mb-4 font-bold tracking-widest uppercase">Hours</h3>
+            <div className="space-y-2 opacity-80">
+              <p className="flex items-center gap-2"><Clock size={14} /> Tue – Sun</p>
+              <p>12:00pm – 10:00pm</p>
+              <p className="text-xs">Last appointment at 10pm</p>
             </div>
           </div>
-
           <div>
-            <h3
-              className="mb-4 font-normal"
-              style={{ fontSize: '1.25rem', color: '#ffffff', letterSpacing: '0.04em' }}
-            >
-              Useful Links
-            </h3>
-            <ul className="space-y-1.5">
-              {['Home', 'Massage', 'Seated Massage', 'Personal Training', 'Beauty Packages', 'Qualifications', 'References'].map((label, i) => (
+            <h3 className="mb-4 font-bold tracking-widest uppercase">Useful Links</h3>
+            <ul className="space-y-2 opacity-80">
+              {['Massage', 'Seated Massage', 'Personal Training', 'Beauty Packages', 'Qualifications', 'References'].map((label, i) => (
                 <li key={label}>
-                  <motion.button
-                    id={`footer-link-${i}`}
-                    onClick={() => navigateTo(i)}
-                    className="text-sm font-light text-left cursor-pointer"
-                    style={{ color: '#ffffff', letterSpacing: '0.03em', originX: 0 }}
-                    whileHover={{ x: 6, color: '#38bdf8' }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                  >
+                  <button onClick={() => navigateTo(i)} className="hover:underline text-left">
                     {label}
-                  </motion.button>
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
-
           <div>
-            <h3
-              className="mb-4 font-normal"
-              style={{ fontSize: '1.25rem', color: '#ffffff', letterSpacing: '0.04em' }}
-            >
-              Contact Us
-            </h3>
-            <div className="space-y-2">
-              <a
-                href="mailto:claudia@purls-group.co.uk"
-                className="flex items-center gap-2 text-sm font-light transition-colors duration-200 hover:text-sky-400"
-                style={{ color: '#ffffff' }}
-              >
-                <Mail size={13} />
-                claudia@purls-group.co.uk
+            <h3 className="mb-4 font-bold tracking-widest uppercase">Contact</h3>
+            <div className="space-y-3 opacity-80">
+              <a href="mailto:claudia@purls-group.co.uk" className="flex items-center gap-2 hover:underline">
+                <Mail size={14} /> claudia@purls-group.co.uk
               </a>
-              <a
-                href="https://wa.me/61434605902"
-                className="flex items-center gap-2 text-sm font-light transition-colors duration-200 hover:text-sky-400"
-                style={{ color: '#ffffff' }}
-              >
-                <Phone size={13} />
-                WhatsApp: +61434605902
+              <a href="https://wa.me/61434605902" className="flex items-center gap-2 hover:underline">
+                <Phone size={14} /> WhatsApp: +61434605902
               </a>
             </div>
           </div>
         </div>
-        <Copyright />
+        <div className="mt-10 text-center opacity-60">
+          <Copyright />
+        </div>
       </footer>
     </div>
   )

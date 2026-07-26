@@ -3,9 +3,10 @@ import NeedHelp from '../components/shared/NeedHelp'
 import Copyright from '../components/shared/Copyright'
 
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.55, ease: 'easeOut' },
+  initial: { opacity: 0, y: 15 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-50px" },
+  transition: { delay, duration: 0.6, ease: 'easeOut' },
 })
 
 const massageServices = [
@@ -36,12 +37,12 @@ const massageServices = [
   },
   {
     img: '/massage_stones.png',
-    title: 'Aromatherapy And Hot Stones',
+    title: 'Aromatherapy & Hot Stones',
     desc: 'Is a holistic therapy that blends the benefits of massage with the therapeutic properties of essential oils. Hot stones work to ease muscle tension and pain, while essential oils target specific physical or emotional concerns. The combination of aromatherapy and heat promotes a deep sense of relaxation, calming both the body and mind.',
   },
   {
     img: '/infant-toddler.png',
-    title: 'Infant/Toddler/Child Massage',
+    title: 'Infant/Child Massage',
     desc: 'Helps you incorporate nurturing touch into your daily routine. Techniques of soft, gentle strokes aim to strengthen the bond between child and parent by encouraging the release of oxytocin. A beautiful ritual to promote relaxation by reducing stress for both, whilst boosting the child\'s emotional security and trust. This massage stimulates sensory development, relieves discomfort from gas, colic, and constipation and supports muscle development and flexibility. (Recommended from 2 weeks, once umbilical stump has fallen off).',
   },
   {
@@ -73,62 +74,58 @@ const massageServices = [
 
 export default function Massage() {
   return (
-    <div
-      className="page-scroll w-full h-full"
-      style={{ background: '#000', fontFamily: 'var(--font-family-primary)' }}
-    >
-      <div className="pt-14 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="page-scroll w-full h-full relative" style={{ overflowX: 'hidden' }}>
+      <div className="pt-10 md:pt-16 px-4 md:px-12 max-w-6xl mx-auto">
+        
         <motion.div
           {...fadeUp(0)}
-          className="grid grid-cols-3 border border-sky-500 max-w-3xl mx-auto mb-16 text-center select-none"
-          style={{ background: '#000' }}
+          className="sketched-border max-w-2xl mx-auto mb-12 md:mb-16 p-3 md:p-4 text-center select-none bg-white/40 shadow-sm relative transform -rotate-1"
         >
-          <div className="py-4 border-r border-sky-500 flex flex-col justify-center bg-black text-white">
-            <span className="text-sm font-semibold tracking-wider uppercase mb-1">60 Minute</span>
-            <span className="text-2xl font-bold">£80</span>
-          </div>
-          <div className="py-4 border-r border-sky-500 flex flex-col justify-center bg-[#0ea5e9] text-black">
-            <span className="text-sm font-bold tracking-wider uppercase mb-1">90 Minutes</span>
-            <span className="text-2xl font-black">£110</span>
-          </div>
-          <div className="py-4 flex flex-col justify-center bg-black text-white">
-            <span className="text-sm font-semibold tracking-wider uppercase mb-1">120 Minutes</span>
-            <span className="text-2xl font-bold">£130</span>
+          <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-black/10"></div>
+          <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-black/10"></div>
+          
+          <h2 className="font-handwriting text-3xl sm:text-4xl font-bold mb-4 text-[var(--color-ink)]">Massage Treatments</h2>
+          
+          <div className="grid grid-cols-3 divide-x-2 divide-dashed divide-black/30 font-typewriter">
+            <div className="py-2 flex flex-col justify-center">
+              <span className="text-[10px] sm:text-xs tracking-wider md:tracking-widest uppercase mb-1 opacity-70">60 Min</span>
+              <span className="text-xl sm:text-2xl font-bold">£80</span>
+            </div>
+            <div className="py-2 flex flex-col justify-center bg-[var(--color-ink)] text-white/90 font-bold transform scale-105 rounded-sm shadow-md">
+              <span className="text-[10px] sm:text-xs tracking-wider md:tracking-widest uppercase mb-1 opacity-80">90 Min</span>
+              <span className="text-xl sm:text-2xl font-black">£110</span>
+            </div>
+            <div className="py-2 flex flex-col justify-center">
+              <span className="text-[10px] sm:text-xs tracking-wider md:tracking-widest uppercase mb-1 opacity-70">120 Min</span>
+              <span className="text-xl sm:text-2xl font-bold">£130</span>
+            </div>
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-y-16 gap-x-6 md:gap-x-10 mb-20 relative">
           {massageServices.map((s, i) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05, duration: 0.5, ease: 'easeOut' }}
-              className="flex flex-col items-center text-center"
+              {...fadeUp(i * 0.05)}
+              className="flex flex-col text-center items-center"
             >
               <div
-                className="w-full overflow-hidden mb-5 border border-sky-500/10 rounded-lg"
-                style={{ height: '220px' }}
+                className="w-full sketched-border mb-5 bg-white/50 p-2 transform transition-transform hover:scale-105 hover:rotate-1 duration-300"
+                style={{ height: '200px' }}
               >
                 <img
                   src={s.img}
                   alt={s.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading='lazy'
+                  className="w-full h-full object-cover mix-blend-multiply sepia-[0.3]"
+                  loading="lazy"
                 />
               </div>
 
-              <h3
-                className="text-xl font-medium mb-3"
-                style={{ color: '#ffffff', letterSpacing: '0.02em' }}
-              >
+              <h3 className="font-handwriting text-3xl font-bold mb-3 text-[var(--color-accent)]">
                 {s.title}
               </h3>
 
-              <p
-                className="text-sm font-light leading-relaxed"
-                style={{ color: 'var(--color-muted)', lineHeight: 1.8 }}
-              >
+              <p className="font-serif text-sm md:text-[1.05rem] leading-relaxed opacity-90 text-left">
                 {s.desc}
               </p>
             </motion.div>
@@ -136,11 +133,14 @@ export default function Massage() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-20">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 mb-12 border-t border-black/10 pt-10">
+        <h3 className="font-handwriting text-3xl md:text-4xl mb-4 text-center">Questions?</h3>
         <NeedHelp />
       </div>
 
-      <Copyright />
+      <div className="opacity-60 pb-8">
+        <Copyright />
+      </div>
     </div>
   )
 }

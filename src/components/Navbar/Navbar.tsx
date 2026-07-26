@@ -1,196 +1,71 @@
-import { AnimatePresence, motion } from 'framer-motion'
-import { BookOpen, X } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import type { NavbarProps } from '../../types'
 
+export default function Navbar({ pages, currentPage, onNavigate }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false)
 
-const sidebarVariants = {
-  hidden: { x: '-100%', opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: { type: 'spring', stiffness: 300, damping: 30 },
-  },
-  exit: {
-    x: '-100%',
-    opacity: 0,
-    transition: { duration: 0.25, ease: 'easeIn' },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: { delay: i * 0.06 + 0.1, duration: 0.35, ease: 'easeOut' },
-  }),
-}
-
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-}
-
-export default function Navbar({ pages, currentPage, isOpen, onToggle, onNavigate }: NavbarProps) {
   return (
     <>
-      <button
-        id="navbar-toggle"
-        onClick={onToggle}
-        aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
-        aria-expanded={isOpen}
-        className="absolute top-13 md:top-10 left-1 md:left-5 z-50 flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-300 hover:scale-105 active:scale-95"
-        style={{
-          borderColor: isOpen ? 'var(--color-gold)' : 'var(--color-border)',
-          background: 'var(--color-glass)',
-          backdropFilter: 'blur(16px)',
-          boxShadow: isOpen ? '0 0 20px rgba(201,169,110,0.2)' : 'none',
-        }}
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.span
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <X size={15} style={{ color: 'var(--color-gold)' }} />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="open"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <BookOpen size={15} style={{ color: 'var(--color-gold)' }} />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </button>
+      <div className="absolute right-4 top-8 z-50 pointer-events-auto">
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 bg-[#d2c3a5] rounded-full shadow-md text-black hover:bg-[#e8dcc4] transition-colors border border-black/10 flex items-center justify-center"
+          aria-label="Toggle menu"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              key="overlay"
-              variants={overlayVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              transition={{ duration: 0.25 }}
-              className="absolute inset-0 z-30"
-              style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
-              onClick={onToggle}
-            />
-
-            <motion.nav
-              key="sidebar"
-              variants={sidebarVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="absolute top-0 left-0 bottom-0 z-40 flex flex-col"
-              style={{
-                width: '300px',
-                background: 'var(--color-glass)',
-                backdropFilter: 'blur(24px)',
-                borderRight: '1px solid var(--color-border)',
-              }}
-              aria-label="Site navigation"
-            >
-              <div className="px-8 pt-8 pb-6" style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <nav 
+            className="absolute right-0 top-[10%] bottom-[10%] z-40 flex flex-col justify-center gap-2 pr-0 pointer-events-none"
+          >
+            {pages.map((page, i) => {
+              const isActive = i === currentPage
+              return (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 }}
+                  key={page.id}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: isActive ? -4 : 0, opacity: 1 }}
+                  exit={{ x: 50, opacity: 0 }}
+                  transition={{ delay: i * 0.05, duration: 0.3 }}
+                  className="pointer-events-auto flex justify-end"
                 >
-                  <p
-                    className="text-xs pl-8 tracking-[0.25em] uppercase mb-1"
-                    style={{ color: 'var(--color-gold)', fontFamily: 'var(--font-family-primary)' }}
+                  <button
+                    onClick={() => {
+                      onNavigate(i)
+                      setIsOpen(false)
+                    }}
+                    className="relative px-4 py-2 text-sm font-handwriting shadow-sm group transition-transform hover:-translate-x-2"
+                    style={{
+                      backgroundColor: isActive ? '#e8dcc4' : '#d2c3a5',
+                      color: 'var(--color-ink)',
+                      border: '1px solid rgba(0,0,0,0.1)',
+                      borderRight: 'none',
+                      borderRadius: '8px 0 0 8px',
+                      fontSize: '1rem',
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap',
+                    }}
+                    title={page.label}
                   >
-                    Navigations
-                  </p>
-                  <h2
-                    className="text-2xl pl-8 font-light"
-                    style={{ color: 'var(--color-text)', fontFamily: 'var(--font-family-primary)' }}
-                  >
-                    Purls Group
-                  </h2>
+                    <span>{page.label}</span>
+                  </button>
                 </motion.div>
-              </div>
-
-              <div className="flex-1 overflow-y-auto py-6 px-6">
-                <ul className="space-y-1" role="list">
-                  {pages.map((page, i) => {
-                    const isActive = i === currentPage
-                    return (
-                      <motion.li
-                        key={page.id}
-                        custom={i}
-                        variants={itemVariants}
-                        initial="hidden"
-                        animate="visible"
-                      >
-                        <button
-                          id={`nav-link-${page.id}`}
-                          onClick={() => onNavigate(i)}
-                          className="w-full flex items-center gap-4 px-4 py-3 rounded-lg text-left transition-all duration-250 group"
-                          style={{
-                            background: isActive ? 'rgba(201,169,110,0.1)' : 'transparent',
-                            border: isActive ? '1px solid rgba(201,169,110,0.25)' : '1px solid transparent',
-                          }}
-                        >
-                          <span
-                            className="w-px h-4 shrink-0 transition-colors duration-250"
-                            style={{ background: isActive ? 'var(--color-gold)' : 'var(--color-border)' }}
-                          />
-
-                          <span
-                            className="text-base font-light transition-colors duration-250"
-                            style={{
-                              color: isActive ? 'var(--color-gold-light)' : 'var(--color-text)',
-                              fontFamily: 'var(--font-family-primary)',
-                              letterSpacing: '0.04em',
-                            }}
-                          >
-                            {page.label}
-                          </span>
-
-                          {isActive && (
-                            <span
-                              className="ml-auto w-1.5 h-1.5 rounded-full shrink-0"
-                              style={{ background: 'var(--color-gold)' }}
-                            />
-                          )}
-                        </button>
-                      </motion.li>
-                    )
-                  })}
-                </ul>
-              </div>
-
-              <div
-                className="px-8 py-6 text-xs space-y-1"
-                style={{
-                  borderTop: '1px solid var(--color-border)',
-                  color: 'var(--color-muted)',
-                  fontFamily: 'var(--font-family-primary)',
-                  letterSpacing: '0.03em',
-                }}
-              >
-                <p>Tue – Sun · 12:00pm – 10:00pm</p>
-                <p>claudia@purls-group.co.uk</p>
-                <p>+61434605902</p>
-              </div>
-            </motion.nav>
-          </>
+              )
+            })}
+          </nav>
         )}
       </AnimatePresence>
     </>
   )
 }
+

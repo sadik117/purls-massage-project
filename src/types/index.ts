@@ -3,8 +3,6 @@ import type { ReactNode } from 'react'
 export interface NavbarProps {
   pages: PageConfig[]
   currentPage: number
-  isOpen: boolean
-  onToggle: () => void
   onNavigate: (index: number) => void
 }
 
